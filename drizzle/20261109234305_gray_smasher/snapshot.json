@@ -1,0 +1,250 @@
+{
+  "type": "base",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "ef6a84d2-aef1-4d7e-a3e2-6194c238d195",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "plants"
+      ],
+      "writes": [
+        "s|tbl|public.plants",
+        "n|tbl|public.plants",
+        "e|tbl|public.plants",
+        "n|rel|public.plants",
+        "n|type|public.plants",
+        "n|rel|public.plants_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "readings"
+      ],
+      "writes": [
+        "s|tbl|public.readings",
+        "n|tbl|public.readings",
+        "e|tbl|public.readings",
+        "n|rel|public.readings",
+        "n|type|public.readings",
+        "n|rel|public.readings_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "readings",
+        "ix_readings_plant_time"
+      ],
+      "writes": [
+        "s|idx|public.ix_readings_plant_time",
+        "n|idx|public.ix_readings_plant_time",
+        "e|idx|public.ix_readings_plant_time",
+        "n|rel|public.ix_readings_plant_time"
+      ],
+      "reads": [
+        "n|tbl|public.readings",
+        "n|sch|public",
+        "n|col|public.readings.plantId",
+        "n|col|public.readings.recordedAt"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "readings"
+      ],
+      "writes": [
+        "s|fk|public.readings.readings_plantId_fkey",
+        "n|fk|public.readings.readings_plantId_fkey",
+        "e|fk|public.readings.readings_plantId_fkey",
+        "n|con|public.readings.readings_plantId_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.readings",
+        "n|sch|public",
+        "n|tbl|public.plants",
+        "n|sch|public",
+        "n|col|public.readings.plantId",
+        "n|col|public.plants.id",
+        "e|uniqueness|public.plants.id"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "public",
+      "name": "plants",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "readings",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "table": "plants",
+      "name": "id",
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "plants",
+      "name": "name",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "id",
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "plantId",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "moisture",
+      "type": "double precision",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "recordedAt",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "ix_readings_plant_time",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "plantId",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "recordedAt",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "readings_plantId_fkey",
+      "nameExplicit": true,
+      "columns": [
+        "plantId"
+      ],
+      "schemaTo": "public",
+      "tableTo": "plants",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "plants",
+      "name": "plants_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "readings",
+      "name": "readings_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    }
+  ]
+}
