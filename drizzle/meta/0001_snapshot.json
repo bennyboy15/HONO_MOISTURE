@@ -1,0 +1,130 @@
+{
+  "id": "b6025276-349a-4861-bd1e-ce7f05f9ea5c",
+  "prevId": "b9cadf66-188b-406e-8f85-6307d5255405",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.plants": {
+      "name": "plants",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "idealMin": {
+          "name": "idealMin",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "idealMax": {
+          "name": "idealMax",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.readings": {
+      "name": "readings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "plantId": {
+          "name": "plantId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "moisture": {
+          "name": "moisture",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recordedAt": {
+          "name": "recordedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "ix_readings_plant_time": {
+          "name": "ix_readings_plant_time",
+          "columns": [
+            {
+              "expression": "plantId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "recordedAt",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "readings_plantId_fkey": {
+          "name": "readings_plantId_fkey",
+          "tableFrom": "readings",
+          "tableTo": "plants",
+          "columnsFrom": [
+            "plantId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
