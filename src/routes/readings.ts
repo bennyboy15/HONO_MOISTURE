@@ -29,7 +29,7 @@ readingsRouter.get("/:id/readings/latest", zValidator("param", idParam), async (
     if (!(await plantExists(id))) {
         return c.json({ error: "Plant not found" }, 404);
     }
-    const latest = await db.select().from(readings).where(eq(readings.plantId, id)).orderBy(desc(readings.recordedAt)).limit(1);
+    const [latest] = await db.select().from(readings).where(eq(readings.plantId, id)).orderBy(desc(readings.recordedAt)).limit(1);
     return latest ? c.json(latest) : c.json({ error: "No readings yet" }, 404);
 });
 
