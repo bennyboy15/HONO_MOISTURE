@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { requireApiKey } from "./middleware/auth.js";
 import { plantRouter } from "./routes/plants.js";
+import { readingsRouter } from "./routes/readings.js";
 
 const app = new Hono();
 
@@ -17,6 +18,7 @@ app.on(["POST", "PUT", "PATCH", "DELETE"], "/plants/*", requireApiKey);
 
 // --- ROUTES ---
 app.route("/plants", plantRouter);
+app.route("/plants", readingsRouter);
 
 // --- ERROR HANDLING ---
 app.notFound((c) => c.json({ error: "Not found" }, 404));
