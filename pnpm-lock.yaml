@@ -14,6 +14,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.9.1
         version: 0.9.1(hono@4.13.17)(zod@4.6.7)
+      dotenv:
+        specifier: ^18.0.10
+        version: 18.0.10
       drizzle-orm:
         specifier: ~0.44.7
         version: 0.44.7(@types/pg@8.23.1)(pg@8.23.1)
@@ -33,9 +36,6 @@ importers:
       '@types/pg':
         specifier: ^8.23.1
         version: 8.23.1
-      dotenv:
-        specifier: ^18.0.9
-        version: 18.0.9
       drizzle-kit:
         specifier: ~0.31.11
         version: 0.31.11
@@ -644,8 +644,8 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  dotenv@18.0.9:
-    resolution: {integrity: sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw==}
+  dotenv@18.0.10:
+    resolution: {integrity: sha512-89FAA1xchzK2mxVWdr5F/0rldwiueXs6zJM86rO66EzekR1iBdiXRthyG+m5GvkJaFH3C2LESzamTkgndmLT2A==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -1173,7 +1173,7 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  dotenv@18.0.9: {}
+  dotenv@18.0.10: {}
 
   drizzle-kit@0.31.11:
     dependencies:

@@ -10,6 +10,7 @@ import { readingsRouter } from "./routes/readings.js";
 const app = new Hono();
 
 const origin = process.env.NODE_ENV === "development" ? "http://localhost:5173" : process.env.FRONTEND_URL;
+if (!origin) throw new Error("FRONTEND_URL is not set");
 
 app.use("*", logger());
 app.use("*", cors({ origin: origin }));
