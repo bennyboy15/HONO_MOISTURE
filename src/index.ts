@@ -9,8 +9,10 @@ import { readingsRouter } from "./routes/readings.js";
 
 const app = new Hono();
 
+const origin = process.env.NODE_ENV === "development" ? "http://localhost:5173" : process.env.FRONTEND_URL;
+
 app.use("*", logger());
-app.use("*", cors({ origin: "http://localhost:5173" }));
+app.use("*", cors({ origin: origin }));
 
 // --- AUTH MIDDLEWARE ---
 app.on(["POST", "PUT", "PATCH", "DELETE"], "/plants", requireApiKey);
