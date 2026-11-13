@@ -1,8 +1,5 @@
-```
-npm install
-npm run dev
-```
+# Create User
 
 ```
-open http://localhost:3000
+pnpm user:create --email you@example.com --name "John Doe"
 ```
