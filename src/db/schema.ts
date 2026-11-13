@@ -3,6 +3,8 @@ import { boolean, doublePrecision, foreignKey, index, integer, pgTable, serial, 
 export const plants = pgTable("plants", {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 255 }).notNull(),
+    idealMin: doublePrecision("idealMin"),
+    idealMax: doublePrecision("idealMax"),
 });
 
 export const readings = pgTable(
