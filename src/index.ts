@@ -3,7 +3,8 @@ import "dotenv/config";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { requireApiKey } from "./middleware/auth.js";
+import { auth } from "./auth.js";
+import { requireAuth } from "./middleware/auth.js";
 import { plantRouter } from "./routes/plants.js";
 import { readingsRouter } from "./routes/readings.js";
 
@@ -13,11 +14,14 @@ const origin = process.env.NODE_ENV === "development" ? "http://localhost:5173" 
 if (!origin) throw new Error("FRONTEND_URL is not set");
 
 app.use("*", logger());
-app.use("*", cors({ origin: origin }));
+app.use("*", cors({ origin: origin, credentials: true }));
 
-// --- AUTH MIDDLEWARE ---
-app.on(["POST", "PUT", "PATCH", "DELETE"], "/plants", requireApiKey);
-app.on(["POST", "PUT", "PATCH", "DELETE"], "/plants/*", requireApiKey);
+// --- BETTER AUTH (sign-in, sign-out, get-session, change-password, ...) ---
+app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
+
+// --- AUTH MIDDLEWARE (everything under /plants requires login) ---
+app.use("/plants", requireAuth);
+app.use("/plants/*", requireAuth);
 
 // --- ROUTES ---
 app.route("/plants", plantRouter);
