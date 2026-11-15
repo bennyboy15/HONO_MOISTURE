@@ -14,7 +14,8 @@ const origin = process.env.NODE_ENV === "development" ? "http://localhost:5173" 
 if (!origin) throw new Error("FRONTEND_URL is not set");
 
 app.use("*", logger());
-app.use("*", cors({ origin: origin, credentials: true }));
+// set-auth-token: the Better Auth bearer plugin returns the session token in this header on sign-in.
+app.use("*", cors({ origin: origin, credentials: true, exposeHeaders: ["set-auth-token"] }));
 
 // --- BETTER AUTH (sign-in, sign-out, get-session, change-password, ...) ---
 app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
