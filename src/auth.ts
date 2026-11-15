@@ -5,7 +5,8 @@ import * as schema from "./db/schema.js";
 
 if (!process.env.BETTER_AUTH_SECRET) throw new Error("BETTER_AUTH_SECRET is not set");
 
-const frontendOrigin = process.env.NODE_ENV === "development" ? "http://localhost:5173" : process.env.FRONTEND_URL;
+const isDev = process.env.NODE_ENV === "development";
+const frontendOrigin = isDev ? "http://localhost:5173" : process.env.FRONTEND_URL;
 if (!frontendOrigin) throw new Error("FRONTEND_URL is not set");
 
 export const auth = betterAuth({
@@ -29,6 +30,12 @@ export const auth = betterAuth({
     session: {
         expiresIn: 60 * 60 * 24 * 30, // 30 days
         updateAge: 60 * 60 * 24, // refresh expiry once a day while in use
+    },
+    advanced: {
+        // In production the frontend and this API are different sites (separate *.onrender.com
+        // subdomains), so the session cookie must be allowed cross-site. Dev keeps the default:
+        // localhost:5173 -> localhost:3000 is same-site, and Secure cookies need HTTPS.
+        defaultCookieAttributes: isDev ? undefined : { sameSite: "none", secure: true },
     },
 });
 
